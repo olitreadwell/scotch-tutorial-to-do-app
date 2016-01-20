@@ -84,3 +84,11 @@ app.delete('/api/todos/:todo_id', function(request, response) {
     });
   });
 });
+
+
+// application ----------------------------------------------------
+app.get('*', function(request, response) {
+  // load the single view file
+  // (angular will hindale the page changes on the front-end)
+  response.sendfile('./public/index.html'); 
+});
