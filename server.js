@@ -47,3 +47,23 @@ app.get('/api/todos', function(request, response) {
     response.json(todos); // return all todos in JSON format
   });
 })
+
+// create todo and send back all todos after creation
+app.post('/api/todos', function(request, reponse) {
+
+  // create a todo, information comes from AJAX request from Angular
+  Todo.create({
+    text : request.body.text,
+    done : false
+  }, function(error, todo) {
+    if (error)
+      response.send(error);
+
+    // get and return all the todos after you create another
+    Todo.find(function(error, todos) {
+      if (error)
+        resposne.send(error)
+      response.json(todos);
+    });
+  });
+});
