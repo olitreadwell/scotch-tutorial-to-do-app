@@ -67,3 +67,20 @@ app.post('/api/todos', function(request, reponse) {
     });
   });
 });
+
+// delete a todo
+app.delete('/api/todos/:todo_id', function(request, response) {
+  Todo.remove({
+    _id : request.params.todo_id
+  }, function(error, todo) {
+    if (error)
+      response.send(error);
+
+    // get and return all the todos after you delete
+    Todo.find(function(error, todos) {
+      if (error)
+        response.send(error)
+      response.json(todos);
+    });
+  });
+});
