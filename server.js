@@ -40,7 +40,6 @@ app.get('/api/todos', function(request, response) {
 
     // if there is an error retrieving, send the error.
     //nothing after response.send(error) will execute.
-
     if (error)
       response.send(error)
 
@@ -49,7 +48,7 @@ app.get('/api/todos', function(request, response) {
 })
 
 // create todo and send back all todos after creation
-app.post('/api/todos', function(request, reponse) {
+app.post('/api/todos', function(request, response) {
 
   // create a todo, information comes from AJAX request from Angular
   Todo.create({
@@ -62,7 +61,8 @@ app.post('/api/todos', function(request, reponse) {
     // get and return all the todos after you create another
     Todo.find(function(error, todos) {
       if (error)
-        resposne.send(error)
+        response.send(error)
+
       response.json(todos);
     });
   });
@@ -90,5 +90,5 @@ app.delete('/api/todos/:todo_id', function(request, response) {
 app.get('*', function(request, response) {
   // load the single view file
   // (angular will hindale the page changes on the front-end)
-  response.sendfile('./public/index.html'); 
+  response.sendfile('./public/index.html');
 });
