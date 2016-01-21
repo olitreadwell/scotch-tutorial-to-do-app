@@ -10,7 +10,7 @@ var methodOverride = require('method-override');
 
 // configuration ===============================================
 
-mongoose.connect('mongodb://node:nodeuser@mongo.onmodulus.net:27017/uwO3mypu');
+mongoose.connect('mongodb://to-do-app-admin:A-super-secure-password!@ds047325.mongolab.com:47325/to-do-app');
 
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
@@ -29,7 +29,6 @@ var Todo = mongoose.model('Todo', {
 var port = process.env.PORT || 8080;
 app.listen(port);
 
-// app.listen(8080);
 console.log("App listening on port 8080");
 
 // routes =======================================================
