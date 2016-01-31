@@ -10,7 +10,11 @@ var methodOverride = require('method-override');
 
 // configuration ===============================================
 
-mongoose.connect('mongodb://to-do-app-admin:A-super-secure-password!@ds047325.mongolab.com:47325/to-do-app');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/test');
+
+mongoose.connection.once('connected', function() {
+  console.log("Connected to database")
+});
 
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
@@ -36,36 +40,44 @@ console.log("App listening on port 8080");
 //++ api --------------------------------------------------------
 //++ get all todos
 app.get('/api/todos', function(request, response) {
-
+  console.log("i attempted to get to the api: line 48");
   // use mongoose to get all todos in the database
   Todo.find(function (error, todos) {
-
+    console.log("todos", todos);
     // if there is an error retrieving, send the error.
     //nothing after response.send(error) will execute.
-    if (error)
-      response.send(error)
-
     response.json(todos); // return all todos in JSON format
+
+    if (error) {
+      console.log(error);
+      response.send(error)
+    }
   });
 })
 
 // create todo and send back all todos after creation
 app.post('/api/todos', function(request, response) {
-
+  console.log("request", request.body);
+  console.log("response", response.body);
+  console.log("i attempted to post to the api: line 63");
   // create a todo, information comes from AJAX request from Angular
   Todo.create({
     text : request.body.text,
     done : false
   }, function(error, todo) {
-    if (error)
-      response.send(error);
+    console.log("todo",todo);
+    if (error) {
+      console.log("something went wrong on line 67")
+      response.send(error); }
 
     // get and return all the todos after you create another
     Todo.find(function(error, todos) {
-      if (error)
-        response.send(error)
-
+      console.log("i attempted to find the todo: line 74");
       response.json(todos);
+
+      if (error){
+        response.send(error)
+      }
     });
   });
 });
@@ -75,14 +87,15 @@ app.delete('/api/todos/:todo_id', function(request, response) {
   Todo.remove({
     _id : request.params.todo_id
   }, function(error, todo) {
-    if (error)
+    if (error) {
       response.send(error);
-
+    }
     // get and return all the todos after you delete
     Todo.find(function(error, todos) {
-      if (error)
-        response.send(error)
       response.json(todos);
+      if (error){
+        response.send(error)
+      }
     });
   });
 });
