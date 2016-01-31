@@ -10,7 +10,9 @@ var methodOverride = require('method-override');
 
 // configuration ===============================================
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/test');
+mongoose.connect(process.env.MONGOLAB_URI);
+
+// mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/test');
 
 mongoose.connection.once('connected', function() {
   console.log("Connected to database")
