@@ -10,7 +10,7 @@ var methodOverride = require('method-override');
 
 // configuration ===============================================
 
-mongoose.connect('mongodb://to-do-app-admin:A-super-secure-password!@ds047325.mongolab.com:47325/to-do-app');
+mongoose.connect('mongodb://todoappadmin:todoappadmin@apollo.modulusmongo.net:27017/vatOxe4v');
 
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
